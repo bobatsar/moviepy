@@ -133,7 +133,7 @@ class FFMPEG_VideoWriter:
             if PY3:
                self.proc.stdin.write(img_array.tobytes())
             else:
-               self.proc.stdin.write(img_array.tostring())
+               self.proc.stdin.write(img_array.tobytes())
         except IOError as err:
             _, ffmpeg_error = self.proc.communicate()
             error = (str(err) + ("\n\nMoviePy error: FFMPEG encountered "
@@ -249,7 +249,7 @@ def ffmpeg_write_image(filename, image, logfile=False):
         popen_params["creationflags"] = 0x08000000
 
     proc = sp.Popen(cmd, **popen_params)
-    out, err = proc.communicate(image.tostring())
+    out, err = proc.communicate(image.tobytes())
 
     if proc.returncode:
         err = "\n".join(["[MoviePy] Running : %s\n" % cmd,

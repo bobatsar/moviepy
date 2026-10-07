@@ -83,7 +83,7 @@ class FFMPEG_AudioWriter:
             if PY3:
                self.proc.stdin.write(frames_array.tobytes())
             else:
-               self.proc.stdin.write(frames_array.tostring())
+               self.proc.stdin.write(frames_array.tobytes())
         except IOError as err:
             ffmpeg_error = self.proc.stderr.read()
             error = (str(err)+ ("\n\nMoviePy error: FFMPEG encountered "
